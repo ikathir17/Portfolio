@@ -63,19 +63,17 @@ const Projects = () => {
                     )}
                   </div>
 
-                  <div className="flex items-center mt-2">
-                    <div className="flex gap-4">
-                      {project.metrics.map((metric, idx) => (
-                        <div key={idx} className="group">
-                          <div className="text-lg font-medium text-white">
-                            {metric.value}
-                          </div>
-                          <div className="text-xs text-gray-300 group-hover:text-white transition-colors">
-                            {metric.label}
-                          </div>
+                  <div className="flex gap-4 mt-2">
+                    {project.metrics.map((metric, idx) => (
+                      <div key={idx} className="group">
+                        <div className="text-lg font-medium text-white">
+                          {metric.value}
                         </div>
-                      ))}
-                    </div>
+                        <div className="text-xs text-gray-300 group-hover:text-white transition-colors">
+                          {metric.label}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 
