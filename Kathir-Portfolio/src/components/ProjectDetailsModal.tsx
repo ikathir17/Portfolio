@@ -19,13 +19,42 @@ interface ProjectDetailsModalProps {
     tags: string[];
     link?: string;
     credentials?: {
-      username: string;
-      password: string;
+      username?: string;
+      password?: string;
+      admin?: {
+        username: string;
+        password: string;
+      };
+      customer?: {
+        username: string;
+        password: string;
+      };
+      employees?: Array<{
+        username: string;
+        password: string;
+        department: string;
+      }>;
     };
     features?: string[];
     technologies: string[];
   };
 }
+
+const CredentialItem = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex items-center">
+    <span className="text-amber-200/80 text-sm w-20">{label}:</span>
+    <div className="bg-gray-900/50 px-3 py-1.5 rounded-lg border border-amber-900/50 flex-1">
+      <code className="text-amber-300 font-mono text-sm">{value}</code>
+    </div>
+    <button 
+      onClick={() => navigator.clipboard.writeText(value || '')}
+      className="ml-2 text-amber-400 hover:text-amber-300 transition-colors"
+      title="Copy to clipboard"
+    >
+      <FiLayers size={16} />
+    </button>
+  </div>
+);
 
 export default function ProjectDetailsModal({
   isOpen,
@@ -225,39 +254,58 @@ export default function ProjectDetailsModal({
                       </a>
                     )}
                     {project.credentials && (
-                      <div className="bg-gradient-to-br from-yellow-900/30 to-amber-900/20 rounded-xl p-5 border border-amber-800/30">
-                        <div className="flex items-center text-amber-400 mb-3">
-                          <FiLock className="mr-2" />
-                          <h3 className="text-lg font-semibold text-white">Demo Credentials</h3>
-                        </div>
-                        <div className="space-y-2">
-                          <div className="flex items-center">
-                            <span className="text-amber-200/80 text-sm w-20">Username:</span>
-                            <div className="bg-gray-900/50 px-3 py-1.5 rounded-lg border border-amber-900/50 flex-1">
-                              <code className="text-amber-300 font-mono text-sm">{project.credentials.username}</code>
+                      <div className="space-y-4">
+                        {project.credentials.admin && (
+                          <div className="bg-gradient-to-br from-purple-900/30 to-blue-900/20 rounded-xl p-5 border border-purple-800/30">
+                            <div className="flex items-center text-purple-400 mb-3">
+                              <FiLock className="mr-2" />
+                              <h3 className="text-lg font-semibold text-white">Admin Account</h3>
                             </div>
-                            <button 
-                              onClick={() => navigator.clipboard.writeText(project.credentials?.username || '')}
-                              className="ml-2 text-amber-400 hover:text-amber-300 transition-colors"
-                              title="Copy to clipboard"
-                            >
-                              <FiLayers size={16} />
-                            </button>
+                            <CredentialItem label="Username" value={project.credentials.admin.username} />
+                            <CredentialItem label="Password" value={project.credentials.admin.password} />
                           </div>
-                          <div className="flex items-center">
-                            <span className="text-amber-200/80 text-sm w-20">Password:</span>
-                            <div className="bg-gray-900/50 px-3 py-1.5 rounded-lg border border-amber-900/50 flex-1">
-                              <code className="text-amber-300 font-mono text-sm">{project.credentials.password}</code>
+                        )}
+
+                        {project.credentials.customer && (
+                          <div className="bg-gradient-to-br from-blue-900/30 to-cyan-900/20 rounded-xl p-5 border border-blue-800/30">
+                            <div className="flex items-center text-blue-400 mb-3">
+                              <FiLock className="mr-2" />
+                              <h3 className="text-lg font-semibold text-white">Customer Account</h3>
                             </div>
-                            <button 
-                              onClick={() => navigator.clipboard.writeText(project.credentials?.password || '')}
-                              className="ml-2 text-amber-400 hover:text-amber-300 transition-colors"
-                              title="Copy to clipboard"
-                            >
-                              <FiLayers size={16} />
-                            </button>
+                            <CredentialItem label="Username" value={project.credentials.customer.username} />
+                            <CredentialItem label="Password" value={project.credentials.customer.password} />
                           </div>
-                        </div>
+                        )}
+
+                        {project.credentials?.employees && project.credentials.employees.length > 0 && (
+                          <div className="bg-gradient-to-br from-amber-900/30 to-yellow-900/20 rounded-xl p-5 border border-amber-800/30">
+                            <div className="flex items-center text-amber-400 mb-3">
+                              <FiLock className="mr-2" />
+                              <h3 className="text-lg font-semibold text-white">Employee Accounts</h3>
+                            </div>
+                            <div className="space-y-4">
+                              {project.credentials.employees.map((emp, index, array) => (
+                                <div key={index} className="space-y-2">
+                                  <div className="text-amber-200 text-sm font-medium">{emp.department} Department:</div>
+                                  <CredentialItem label="Username" value={emp.username} />
+                                  <CredentialItem label="Password" value={emp.password} />
+                                  {index < array.length - 1 && <div className="h-px bg-amber-800/50 my-2"></div>}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {project.credentials.username && project.credentials.password && (
+                          <div className="bg-gradient-to-br from-gray-900/30 to-gray-800/20 rounded-xl p-5 border border-gray-700/30">
+                            <div className="flex items-center text-gray-400 mb-3">
+                              <FiLock className="mr-2" />
+                              <h3 className="text-lg font-semibold text-white">Demo Account</h3>
+                            </div>
+                            <CredentialItem label="Username" value={project.credentials.username} />
+                            <CredentialItem label="Password" value={project.credentials.password} />
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>

@@ -63,7 +63,7 @@ const Projects = () => {
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between mt-2">
+                  <div className="flex items-center mt-2">
                     <div className="flex gap-4">
                       {project.metrics.map((metric, idx) => (
                         <div key={idx} className="group">
@@ -76,16 +76,6 @@ const Projects = () => {
                         </div>
                       ))}
                     </div>
-                    {project.link && (
-                      <a 
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-blue-400 hover:text-blue-300 transition-colors flex items-center whitespace-nowrap"
-                      >
-                        View <span className="hidden sm:inline ml-0.5">case study</span> →
-                      </a>
-                    )}
                   </div>
                 </div>
                 

@@ -12,15 +12,28 @@ export type Project = {
   features?: string[];
   link?: string;
   credentials?: {
-    username: string;
-    password: string;
+    username?: string;
+    password?: string;
+    admin?: {
+      username: string;
+      password: string;
+    };
+    customer?: {
+      username: string;
+      password: string;
+    };
+    employees?: Array<{
+      username: string;
+      password: string;
+      department: string;
+    }>;
   };
 };
 
 export const projects: Project[] = [
   {
     title: "Grievance Handling System",
-    description: "Developed an institutional grievance resolution platform with multi-role access (users, employee, admin). Implemented ticket lifecycle management (submit/track/resolve) and designed intuitive UI with dashboard analytics for administrators.",
+    description: "Developed an institutional grievance resolution platform with multi-role access (Admin, Employees, and Customers). The system streamlines ticket submission, tracking, and resolution processes while providing comprehensive dashboard analytics for administrators and department-wise ticket management for employees.",
     image: "/Projects/Grievance Handling System.png",
     images: [
       "/Projects/Grievance Handling System.png",
@@ -33,22 +46,31 @@ export const projects: Project[] = [
         label: "Reduced Response Time"
       },
       {
-        value: "3",
+        value: "7+",
         label: "User Roles"
       }
     ],
     tags: ["Django", "SQLite", "HTML/CSS/JS"],
-    technologies: ["Django", "SQLite", "HTML5", "CSS3", "JavaScript", "Bootstrap"],
+    technologies: ["Django", "SQLite", "HTML5", "CSS3", "JavaScript", "Bootstrap", "Chart.js"],
     features: [
-      "Multi-role access control (Admin, Employee, User)",
-      "Ticket submission and tracking system",
-      "Real-time status updates",
-      "Admin dashboard with analytics"
+      "Multi-role access control (Admin, 5 Department Employees, Customer)",
+      "Department-wise ticket assignment and tracking",
+      "Real-time status updates and notifications",
+      "Comprehensive admin dashboard with analytics",
+      "Ticket prioritization and escalation system",
+      "Automated email notifications"
     ],
     link: "https://grievance-handling-system-ashen.vercel.app/",
     credentials: {
-      username: "demo@example.com",
-      password: "demo123"
+      admin: { username: "Admin", password: "admin@1234$" },
+      customer: { username: "Customer", password: "cust@1234$" },
+      employees: [
+        { username: "Employee1", password: "emp1@1234$", department: "Technical Support" },
+        { username: "Employee2", password: "emp2@1234$", department: "Product Management" },
+        { username: "Employee3", password: "emp3@1234$", department: "Quality Assurance" },
+        { username: "Employee4", password: "emp4@1234$", department: "Development" },
+        { username: "Employee5", password: "emp5@1234$", department: "Customer Support" }
+      ]
     }
   },
   {
