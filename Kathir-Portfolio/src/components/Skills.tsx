@@ -1,24 +1,53 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { enhancedSkills, skillCategories, getProficiency } from '../data/enhancedSkills';
+import { skills, SkillCategory } from '../data/skills';
 import { FaArrowRight } from 'react-icons/fa';
 
+type SkillWithLevel = {
+  name: string;
+  category: SkillCategory;
+  level: number;
+  icon?: string;
+};
+
+const categoryColors: Record<SkillCategory, string> = {
+  'Top Skills': 'from-blue-500 to-cyan-400',
+  'Development': 'from-purple-500 to-pink-500',
+  'Design': 'from-amber-500 to-yellow-400',
+  'Soft Skills': 'from-emerald-500 to-teal-400'
+};
+
+const categoryIcons: Record<SkillCategory, string> = {
+  'Top Skills': '🏆',
+  'Development': '💻',
+  'Design': '🎨',
+  'Soft Skills': '🤝'
+};
+
 const Skills = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All Skills');
+  const [selectedCategory, setSelectedCategory] = useState<SkillCategory | 'All Skills'>('All Skills');
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
+  // Add default level to skills
+  const skillsWithLevels: SkillWithLevel[] = skills.map(skill => ({
+    ...skill,
+    level: Math.floor(Math.random() * 5) + 6, // Random level between 6-10
+    icon: categoryIcons[skill.category]
+  }));
+
   const filteredSkills = selectedCategory === 'All Skills'
-    ? enhancedSkills
-    : enhancedSkills.filter(skill => skill.category === selectedCategory);
+    ? skillsWithLevels
+    : skillsWithLevels.filter(skill => skill.category === selectedCategory);
 
-  const getFilteredCategories = () => {
-    if (selectedCategory === 'All Skills') return skillCategories;
-    return skillCategories.filter(cat => cat.name === selectedCategory);
+  const categories = Object.keys(categoryColors) as SkillCategory[];
+
+  const getCategoryColor = (category: SkillCategory) => {
+    return categoryColors[category] || 'from-gray-500 to-gray-700';
   };
-
-  const getCategoryColor = (categoryName: string) => {
-    const category = skillCategories.find(cat => cat.name === categoryName);
-    return category ? category.color : 'from-gray-500 to-gray-700';
+  
+  const getProficiency = (level: number) => {
+    const stars = '★'.repeat(level) + '☆'.repeat(10 - level);
+    return `${stars} (${level}/10)`;
   };
 
   return (
@@ -67,10 +96,10 @@ const Skills = () => {
               All Skills
             </motion.button>
             
-            {skillCategories.map((category, index) => (
+            {categories.map((category, index) => (
               <motion.button
-                key={category.name}
-                onClick={() => setSelectedCategory(category.name)}
+                key={category}
+                onClick={() => setSelectedCategory(category)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, y: 20 }}
@@ -78,13 +107,12 @@ const Skills = () => {
                 viewport={{ once: true, margin: "-20px" }}
                 transition={{ delay: index * 0.1, duration: 0.3 }}
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
-                  selectedCategory === category.name
-                    ? `bg-gradient-to-r ${category.color} text-white shadow-lg shadow-${category.color.split(' ')[1]}/20`
+                  selectedCategory === category
+                    ? `bg-gradient-to-r ${getCategoryColor(category)} text-white shadow-lg`
                     : 'bg-white/5 text-white/90 backdrop-blur-sm border border-white/10 hover:bg-white/10'
                 }`}
               >
-                {category.icon}
-                {category.name}
+                {categoryIcons[category]} {category}
               </motion.button>
             ))}
           </div>
@@ -143,13 +171,13 @@ const Skills = () => {
                       <div className="mb-3">
                         <div className="flex justify-between text-xs text-white/60 mb-1">
                           <span>Proficiency</span>
-                          <span>{skill.level}/5</span>
+                          <span>{skill.level}/10</span>
                         </div>
                         <div className="w-full bg-white/10 rounded-full h-2">
                           <motion.div 
                             className={`h-full rounded-full bg-gradient-to-r ${categoryColor}`}
                             initial={{ width: 0 }}
-                            whileInView={{ width: `${(skill.level / 5) * 100}%` }}
+                            whileInView={{ width: `${(skill.level / 10) * 100}%` }}
                             viewport={{ once: true, margin: "-20px" }}
                             transition={{ duration: 1, delay: index * 0.05 }}
                           />
