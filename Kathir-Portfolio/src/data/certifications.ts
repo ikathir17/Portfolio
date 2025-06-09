@@ -22,25 +22,11 @@ export const certifications: Certification[] = [
     image: '/Certifications/Infosys Python Foundation.jpg',
   },
   {
-    title: 'Infosys AI Foundation',
-    issuer: 'Infosys',
-    year: 'Aug 2024',
-    details: 'Artificial Intelligence fundamentals.\nPractical AI applications.',
-    image: '/Certifications/Infosys AI Foundation.jpg',
-  },
-  {
     title: 'NPTEL Design Thinking - A Primer',
     issuer: 'NPTEL',
     year: 'Jan - Feb 2024',
     details: 'Human-centered design methodology.\nIIT Madras certified.\nScore: 71%',
     image: '/Certifications/NPTEL Design Thinking.jpg',
-  },
-  {
-    title: 'NPTEL Internet of Things',
-    issuer: 'NPTEL',
-    year: 'Jul - Oct 2024',
-    details: 'IoT systems and applications.\nIIT Kharagpur certified.\nScore: 79%',
-    image: '/Certifications/NPTEL IoT.jpg',
   },
   {
     title: 'Google Cloud Computing Foundations & Generative AI',

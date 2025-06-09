@@ -1,155 +1,131 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Carousel } from './Carousel';
+import DetailsModal from './DetailsModal';
 
 interface ExperienceItem {
   title: string;
   company: string;
   duration: string;
-  description: string[];
+  description: string;
   image: string;
+  role?: string;
 }
 
 const experiences: ExperienceItem[] = [
   {
-    title: "UI/UX Design Intern",
+    title: "UI/UX Design Internship",
     company: "CodSoft",
-    duration: "Sep-Oct 2024",
+    duration: "September - October 2024",
+    role: "UI/UX Design Intern",
     image: "/Experience/UIUX Design Intern.jpg",
-    description: [
-      "Successfully completed 4-week intensive virtual internship program in UI/UX Design",
-      "Received exceptional remarks for design contributions and project execution",
-      "Developed 15+ wireframes and prototypes using Figma",
-      "Conducted user research to improve product usability by 35%"
-    ]
+    description: `Successfully completed a 4-week intensive virtual internship program in UI/UX Design at CodSoft. During this internship, I received exceptional remarks for my design contributions and project execution. I developed 15+ wireframes and prototypes using Figma, focusing on creating intuitive user interfaces. I conducted comprehensive user research that led to a 35% improvement in product usability. This experience allowed me to apply design thinking methodologies to real-world projects and collaborate with cross-functional teams to deliver user-centered design solutions.`
   },
   {
-    title: "Software Development Intern",
+    title: "Software Development Internship",
     company: "Infosys (Internship 5.0)",
-    duration: "Feb-Apr 2025",
+    duration: "February - April 2025",
+    role: "Software Development Intern",
     image: "/Experience/Software Dev Intern.jpg",
-    description: [
-      "Developed core features for institutional Grievance Handling System",
-      "Implemented Django backend with SQLite optimization",
-      "Collaborated in Agile team environment to deliver project milestones",
-      "Reduced ticket resolution time by 60% through system automation"
-    ]
+    description: `As a Software Development Intern at Infosys, I contributed to the development of an institutional Grievance Handling System. I implemented core features using Django for the backend with SQLite optimization, which improved system performance. Working in an Agile team environment, I collaborated with senior developers to deliver project milestones on time. My contributions helped reduce ticket resolution time by 60% through system automation and process improvements. This experience provided me with valuable insights into enterprise software development and the software development lifecycle.`
   }
 ];
 
 const Experience = () => {
   const [selectedExp, setSelectedExp] = useState<ExperienceItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleExpClick = (exp: ExperienceItem) => {
+  const openModal = (exp: ExperienceItem) => {
     setSelectedExp(exp);
+    setIsModalOpen(true);
   };
 
   return (
     <section id="experience" className="py-24 px-4 md:px-6 relative overflow-hidden">
       <div className="container mx-auto relative">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Verified Industry Experience</h2>
-          <p className="text-gray-300 max-w-3xl mx-auto text-lg">
-            This collection documents my participation in structured internship programs with leading tech organizations. Each credential has been authenticated by the issuing institution and represents hands-on experience solving real-world problems.
-          </p>
+        <div className="text-center mb-12">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold mb-4 text-white"
+          >
+            Work Experience
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-gray-300 max-w-3xl mx-auto"
+          >
+            My professional journey and hands-on experience in the tech industry
+          </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {experiences.map((exp, expIndex) => (
-            <motion.div
-              key={expIndex}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: expIndex * 0.1 }}
-              className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 shadow-lg hover:shadow-xl"
-            >
-              <div className="p-6 hover:bg-white/5 transition-colors group cursor-pointer" onClick={() => handleExpClick(exp)}>
-                <div className="flex flex-col h-full">
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="relative"
+        >
+          <div className="space-y-8 max-w-4xl mx-auto">
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+                className="group"
+              >
+                <div 
+                  onClick={() => openModal(exp)}
+                  className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:border-white/20 transition-all cursor-pointer"
+                >
+                  <div className="p-6 md:p-8">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                       <div>
-                        <h4 className="text-xl font-medium text-white group-hover:text-white/90 transition-colors mb-2">{exp.title}</h4>
-                        <p className="text-white/80">{exp.company}</p>
+                        <h3 className="text-xl font-semibold text-white mb-1">{exp.role}</h3>
+                        <p className="text-blue-400">{exp.company}</p>
                       </div>
-                      <div className="text-right">
-                        <p className="text-white/80">{exp.duration}</p>
-                        <p className="text-white/60 text-sm mt-1">Certificate of Completion</p>
+                      <div className="text-sm text-gray-400 bg-white/5 px-3 py-1.5 rounded-full">
+                        {exp.duration}
                       </div>
                     </div>
-                    <ul className="space-y-3">
-                      {exp.description.map((item, itemIndex) => (
-                        <li key={itemIndex} className="text-white/90 flex items-start group-hover:text-white transition-colors">
-                          <span className="mr-2 text-blue-400">•</span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-6 pt-4 border-t border-white/10">
-                    <span className="text-white/60 text-sm group-hover:text-white/80 transition-colors flex items-center">
-                      Click to view certificate
-                      <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    
+                    <p className="mt-4 text-gray-300 line-clamp-3">
+                      {exp.description}
+                    </p>
+                    
+                    <div className="mt-6 flex items-center text-sm text-blue-400 group-hover:text-blue-300 transition-colors">
+                      <span>View Certificate</span>
+                      <svg 
+                        className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
-                    </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Modal for displaying experience certificate */}
-        {selectedExp && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={() => setSelectedExp(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-3xl w-full bg-white/10 rounded-2xl overflow-hidden shadow-2xl"
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
-            >
-              <div className="p-6 border-b border-white/10">
-                <h3 className="text-2xl font-medium text-white mb-2">{selectedExp.title}</h3>
-                <p className="text-white/80">{selectedExp.company}</p>
-              </div>
-              <div className="relative bg-black/20 max-h-[70vh] flex items-center justify-center">
-                <div className="w-full h-full flex items-center justify-center p-4">
-                  <img
-                    src={selectedExp.image}
-                    alt={selectedExp.title}
-                    className="max-w-full max-h-full object-contain"
-                  />
-                </div>
-              </div>
-              <button
-                className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-                onClick={() => setSelectedExp(null)}
-              >
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
+
+      <DetailsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={selectedExp?.title || ''}
+        subtitle={selectedExp?.role}
+        issuer={selectedExp?.company}
+        image={selectedExp?.image}
+        details={selectedExp?.description || ''}
+        date={selectedExp?.duration}
+      />
     </section>
   );
 };
