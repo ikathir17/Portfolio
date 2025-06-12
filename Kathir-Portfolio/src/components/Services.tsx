@@ -184,7 +184,7 @@ const Services = () => {
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
         >
-          {services.map((service, index) => (
+          {services.map((service) => (
             <motion.div
               key={service.title}
               className={`p-6 rounded-2xl backdrop-blur-sm border border-white/10
