@@ -69,6 +69,12 @@ const Navbar = () => {
             Projects
           </button>
           <button
+            onClick={() => scrollToSection('services')}
+            className="text-sm uppercase tracking-wider text-white hover:text-white/90 transition-colors"
+          >
+            Services
+          </button>
+          <button
             onClick={() => scrollToSection('contact')}
             className="text-sm uppercase tracking-wider text-white hover:text-white/90 transition-colors"
           >
@@ -107,6 +113,12 @@ const Navbar = () => {
               className="py-6 text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
             >
               Projects
+            </button>
+            <button
+              onClick={() => scrollToSection('services')}
+              className="py-6 text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
+            >
+              Services
             </button>
             <button
               onClick={() => scrollToSection('contact')}
