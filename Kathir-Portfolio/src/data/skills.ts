@@ -5,55 +5,49 @@ export type Skill = {
   category: SkillCategory;
 };
 
-export const skills: Skill[] = [
+// All unique skills with their primary category
+export const allSkills: { [key: string]: SkillCategory } = {
   // Top Skills
-  { name: 'Web Development', category: 'Top Skills' },
-  { name: 'Java', category: 'Top Skills' },
-  { name: 'Web Design', category: 'Top Skills' },
-  { name: 'UI/UX', category: 'Top Skills' },
-  { name: 'Public Speaking', category: 'Top Skills' },
-
+  'Web Development': 'Top Skills',
+  'Java': 'Top Skills',
+  'Web Design': 'Top Skills',
+  'UI/UX': 'Top Skills',
+  'Public Speaking': 'Top Skills',
+  
   // Development
-  { name: 'Full-Stack Development', category: 'Development' },
-  { name: 'Front-End Development', category: 'Development' },
-  { name: 'HTML / CSS / JavaScript', category: 'Development' },
-  { name: 'Python', category: 'Development' },
-  { name: 'C', category: 'Development' },
-  { name: 'C++', category: 'Development' },
-  { name: 'Django', category: 'Development' },
-  { name: 'MERN Stack', category: 'Development' },
-
+  'Full-Stack Development': 'Development',
+  'Front-End Development': 'Development',
+  'HTML / CSS / JavaScript': 'Development',
+  'Python': 'Development',
+  'Django': 'Development',
+  'MERN Stack': 'Development',
+  'C': 'Development',
+  'C++': 'Development',
+  
   // Design
-  { name: 'UI/UX Design', category: 'Design' },
-  { name: 'Figma', category: 'Design' },
-  { name: 'Prototyping', category: 'Design' },
-  { name: 'Graphic Design', category: 'Design' },
-  { name: 'Canva', category: 'Design' },
-
+  'Figma': 'Design',
+  'Prototyping': 'Design',
+  'Graphic Design': 'Design',
+  'Canva': 'Design',
+  
   // Soft Skills
-  { name: 'Public Speaking', category: 'Soft Skills' },
-  { name: 'Design Thinking', category: 'Soft Skills' },
-  { name: 'Teamwork', category: 'Soft Skills' },
-  { name: 'Analytical Skills', category: 'Soft Skills' },
-  { name: 'Creativity & Innovation', category: 'Soft Skills' },
-  { name: 'Organization Skills', category: 'Soft Skills' },
-  { name: 'Time Management', category: 'Soft Skills' },
-];
+  'Design Thinking': 'Soft Skills',
+  'Teamwork': 'Soft Skills',
+  'Analytical Skills': 'Soft Skills',
+  'Creativity & Innovation': 'Soft Skills',
+  'Organization Skills': 'Soft Skills',
+  'Time Management': 'Soft Skills'
+};
+
+// Convert to array format for compatibility
+export const skills: Skill[] = Object.entries(allSkills).map(([name, category]) => ({
+  name,
+  category
+}));
 
 export const skillCategories = [
-  "UX Design",
-  "UI Design",
-  "Product Design",
-  "Consulting",
-  "Design Systems",
-  "Front-End Development",
-  "Workshops",
-  "Design Sprint",
-  "Interaction Design",
-  "User Testing",
-  "Usability Testing",
-  "UX Research",
-  "Leadership",
-  "Mentoring",
-  "No-Code"
+  'Top Skills',
+  'Development',
+  'Design',
+  'Soft Skills'
 ];
