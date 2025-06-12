@@ -1,220 +1,300 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { skills, SkillCategory } from '../data/skills';
-import { FaArrowRight } from 'react-icons/fa';
 
-type SkillWithLevel = {
-  name: string;
-  category: SkillCategory;
-  level: number;
-  icon?: string;
-};
+type CategoryKey = SkillCategory | 'All Skills';
 
 const categoryColors: Record<SkillCategory, string> = {
-  'Top Skills': 'from-blue-500 to-cyan-400',
-  'Development': 'from-purple-500 to-pink-500',
-  'Design': 'from-amber-500 to-yellow-400',
-  'Soft Skills': 'from-emerald-500 to-teal-400'
+  'Top Skills': 'from-blue-500/20 to-blue-600/20',
+  'Development': 'from-purple-500/20 to-purple-600/20',
+  'Design': 'from-amber-500/20 to-amber-600/20',
+  'Soft Skills': 'from-emerald-500/20 to-emerald-600/20'
 };
 
-const categoryIcons: Record<SkillCategory, string> = {
-  'Top Skills': '🏆',
-  'Development': '💻',
-  'Design': '🎨',
-  'Soft Skills': '🤝'
+const categoryButtonStyles: Record<SkillCategory, string> = {
+  'Top Skills': 'hover:bg-blue-500/10 text-blue-400',
+  'Development': 'hover:bg-purple-500/10 text-purple-400',
+  'Design': 'hover:bg-amber-500/10 text-amber-400',
+  'Soft Skills': 'hover:bg-emerald-500/10 text-emerald-400'
 };
+
+const categories: CategoryKey[] = ['All Skills', 'Top Skills', 'Development', 'Design', 'Soft Skills'];
 
 const Skills = () => {
-  const [selectedCategory, setSelectedCategory] = useState<SkillCategory | 'All Skills'>('All Skills');
-  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-
-  // Add default level to skills
-  const skillsWithLevels: SkillWithLevel[] = skills.map(skill => ({
-    ...skill,
-    level: Math.floor(Math.random() * 5) + 6, // Random level between 6-10
-    icon: categoryIcons[skill.category]
-  }));
-
-  const filteredSkills = selectedCategory === 'All Skills'
-    ? skillsWithLevels
-    : skillsWithLevels.filter(skill => skill.category === selectedCategory);
-
-  const categories = Object.keys(categoryColors) as SkillCategory[];
-
-  const getCategoryColor = (category: SkillCategory) => {
-    return categoryColors[category] || 'from-gray-500 to-gray-700';
-  };
+  const [selectedCategory, setSelectedCategory] = useState<CategoryKey>('All Skills');
+  const [isLoading, setIsLoading] = useState(false);
+  const [direction, setDirection] = useState(1); // 1 for forward, -1 for backward
   
-  const getProficiency = (level: number) => {
-    const stars = '★'.repeat(level) + '☆'.repeat(10 - level);
-    return `${stars} (${level}/10)`;
+  const filteredSkills = selectedCategory === 'All Skills' 
+    ? skills 
+    : skills.filter(skill => skill.category === selectedCategory);
+    
+  const handleCategoryChange = useCallback((newCategory: CategoryKey) => {
+    if (newCategory === selectedCategory) return;
+    
+    setIsLoading(true);
+    setDirection(categories.indexOf(newCategory) > categories.indexOf(selectedCategory) ? 1 : -1);
+    
+    // Simulate loading state for better animation
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setSelectedCategory(newCategory);
+        setTimeout(() => setIsLoading(false), 50);
+      });
+    });
+  }, [selectedCategory]);
+
+  // Fallback color in case a skill's category is not found
+  const getCategoryColor = (category: SkillCategory) => {
+    return categoryColors[category] || 'from-gray-500/20 to-gray-600/20';
   };
 
   return (
-    <section id="skills" className="py-20 md:py-28 px-4 relative overflow-hidden bg-gradient-to-b from-gray-900 to-gray-950">
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0VjIwYTQgNCAwIDEgMSA4IDB2MTRhNCA0IDAgMSAxLTggMHpNMjYgMjZhNCA0IDAgMSAwLTggMHY4YTQgNCAwIDAgMCA4IDB2LTh6bS0xNiA4YTQgNCAwIDEgMS04IDB2LTJhNCA0IDAgMSAxIDggMHYyem0xNiA4YTQgNCAwIDEgMC04IDB2MmE0IDQgMCAwIDAgOCAwdi0yem0xNiAwYTQgNCAwIDEgMS04IDB2LTJhNCA0IDAgMCAxIDggMHYyem0tMTYtOGE0IDQgMCAxIDAtOCAwdjJhNCA0IDAgMCAwIDggMHYteiIvPjwvZz48L2c+PC9zdmc+')] opacity-30"></div>
-      </div>
-      
-      <div className="container mx-auto relative">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="max-w-6xl mx-auto"
-        >
-          <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1.5 text-sm font-medium bg-white/10 text-blue-300 rounded-full mb-4 border border-white/10">
-              Skills & Expertise
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              My <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Technical</span> Skills
-            </h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              A blend of technical expertise and creative problem-solving to deliver exceptional digital experiences.
-            </p>
-          </div>
+    <section id="skills" className="py-12 md:py-16 px-4 bg-transparent">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-8 md:mb-12 px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4">Skills & Expertise</h2>
+          <p className="text-base md:text-lg text-white/80 max-w-2xl mx-auto mb-6 md:mb-8">
+            Technologies and tools I'm proficient in and use to build amazing experiences
+          </p>
           
-          {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12 max-w-4xl mx-auto">
-            <motion.button
-              key="All Skills"
-              onClick={() => setSelectedCategory('All Skills')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-20px" }}
-              transition={{ duration: 0.3 }}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
-                selectedCategory === 'All Skills'
-                  ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/20'
-                  : 'bg-white/5 text-white/90 backdrop-blur-sm border border-white/10 hover:bg-white/10'
-              }`}
-            >
-              All Skills
-            </motion.button>
-            
-            {categories.map((category, index) => (
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6">
+            {categories.map((category) => (
               <motion.button
                 key={category}
-                onClick={() => setSelectedCategory(category)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ delay: index * 0.1, duration: 0.3 }}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
-                  selectedCategory === category
-                    ? `bg-gradient-to-r ${getCategoryColor(category)} text-white shadow-lg`
-                    : 'bg-white/5 text-white/90 backdrop-blur-sm border border-white/10 hover:bg-white/10'
-                }`}
+                onClick={() => handleCategoryChange(category)}
+                className={`
+                  px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm sm:text-base font-medium 
+                  whitespace-nowrap relative overflow-hidden
+                  ${selectedCategory === category 
+                    ? 'bg-white/10 text-white backdrop-blur-sm' 
+                    : 'bg-transparent border border-white/10 text-white/70 hover:bg-white/5'}
+                  ${category !== 'All Skills' ? categoryButtonStyles[category as SkillCategory] : ''}
+                `}
+                disabled={isLoading}
+                initial={false}
+                animate={{
+                  scale: selectedCategory === category ? 1.05 : 1,
+                  opacity: selectedCategory === category ? 1 : 0.8,
+                  transition: {
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 30
+                  }
+                }}
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { 
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 30,
+                    duration: 0.3
+                  }
+                }}
+                whileTap={{ 
+                  scale: 0.98,
+                  transition: { 
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 30
+                  }
+                }}
               >
-                {categoryIcons[category]} {category}
+                {category}
+                {selectedCategory === category && (
+                  <motion.span 
+                    className="absolute bottom-0 left-0 w-full h-0.5 bg-white/40"
+                    layoutId="activeCategory"
+                    transition={{
+                      type: 'spring',
+                      stiffness: 500,
+                      damping: 30,
+                      duration: 0.3
+                    }}
+                  />
+                )}
               </motion.button>
             ))}
           </div>
+        </div>
 
-          {/* Skills Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <AnimatePresence>
-              {filteredSkills.map((skill, index) => {
-                const categoryColor = getCategoryColor(skill.category);
-                const isHovered = hoveredSkill === skill.name;
-                
-                return (
-                  <motion.div
-                    key={`${skill.name}-${index}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    layout
-                    transition={{ 
-                      type: 'spring',
-                      stiffness: 300,
-                      damping: 30,
-                      delay: Math.min(index * 0.03, 0.5)
-                    }}
-                    className={`relative group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden ${
-                      isHovered ? 'scale-[1.02]' : ''
-                    }`}
-                    onMouseEnter={() => setHoveredSkill(skill.name)}
-                    onMouseLeave={() => setHoveredSkill(null)}
-                  >
-                    <div 
-                      className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{
-                        background: `linear-gradient(135deg, ${categoryColor.split(' ')[0].replace('from-', '')}00 0%, ${categoryColor.split(' ')[2].replace('to-', '')}20 100%)`
-                      }}
-                    />
-                    
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <div 
-                            className={`p-2 rounded-lg bg-gradient-to-br ${categoryColor} text-white`}
-                            style={{
-                              boxShadow: `0 4px 15px -5px var(--tw-gradient-from)`
-                            }}
-                          >
-                            {skill.icon}
-                          </div>
-                          <h3 className="text-lg font-semibold text-white">{skill.name}</h3>
-                        </div>
-                        <span className="text-xs px-2 py-1 rounded-full bg-white/5 text-white/70 border border-white/10">
-                          {getProficiency(skill.level)}
-                        </span>
-                      </div>
-                      
-                      <div className="mb-3">
-                        <div className="flex justify-between text-xs text-white/60 mb-1">
-                          <span>Proficiency</span>
-                          <span>{skill.level}/10</span>
-                        </div>
-                        <div className="w-full bg-white/10 rounded-full h-2">
-                          <motion.div 
-                            className={`h-full rounded-full bg-gradient-to-r ${categoryColor}`}
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${(skill.level / 10) * 100}%` }}
-                            viewport={{ once: true, margin: "-20px" }}
-                            transition={{ duration: 1, delay: index * 0.05 }}
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/5">
-                        <span className="text-xs text-white/60">{skill.category}</span>
-                        <div className="flex items-center text-xs text-blue-400 group-hover:text-blue-300 transition-colors">
-                          <span className="mr-1">View projects</span>
-                          <FaArrowRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </div>
-          
-          {/* Empty State */}
-          {filteredSkills.length === 0 && (
+        <AnimatePresence mode="wait" initial={false} custom={direction}>
+          {isLoading ? (
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-12"
+              key="loading"
+              className="flex justify-center items-center h-40"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ 
+                opacity: 1, 
+                y: 0,
+                transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] }
+              }}
+              exit={{ 
+                opacity: 0, 
+                y: -10,
+                transition: { duration: 0.15, ease: [0.4, 0, 1, 1] }
+              }}
             >
-              <div className="text-white/50 mb-4">No skills found in this category</div>
-              <button 
-                onClick={() => setSelectedCategory('All Skills')}
-                className="px-4 py-2 text-sm bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white/80 hover:text-white transition-colors"
+              <motion.div 
+                className="text-white/60 flex items-center gap-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 0.1 } }}
+              >
+                <motion.span
+                  animate={{ 
+                    y: [0, -5, 0],
+                    transition: { 
+                      repeat: Infinity, 
+                      duration: 1.5,
+                      ease: "easeInOut"
+                    }
+                  }}
+                  className="inline-block"
+                >
+                  ⚡
+                </motion.span>
+                Loading skills...
+              </motion.div>
+            </motion.div>
+          ) : filteredSkills.length === 0 ? (
+            <motion.div 
+              key="empty"
+              className="text-center py-8"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ 
+                opacity: 1, 
+                y: 0,
+                transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] }
+              }}
+              exit={{ 
+                opacity: 0, 
+                y: -10,
+                transition: { duration: 0.2, ease: [0.4, 0, 1, 1] }
+              }}
+            >
+              <motion.p 
+                className="text-white/70 mb-4"
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0,
+                  transition: { delay: 0.1, duration: 0.3 }
+                }}
+              >
+                No skills found in this category.
+              </motion.p>
+              <motion.button
+                onClick={() => handleCategoryChange('All Skills')}
+                className="mt-4 px-4 py-2 text-base rounded-lg bg-white/5 hover:bg-white/10 text-white/80"
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { type: 'spring', stiffness: 500, damping: 30 }
+                }}
+                whileTap={{ 
+                  scale: 0.98,
+                  transition: { type: 'spring', stiffness: 500, damping: 30 }
+                }}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0,
+                  transition: { delay: 0.2, duration: 0.3 }
+                }}
               >
                 View All Skills
-              </button>
+              </motion.button>
+            </motion.div>
+          ) : (
+            <motion.div 
+              key={selectedCategory}
+              className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3"
+              initial={{ x: 30 * direction, opacity: 0, filter: 'blur(4px)' }}
+              animate={{ 
+                x: 0, 
+                opacity: 1, 
+                filter: 'blur(0px)',
+                transition: { 
+                  duration: 0.4, 
+                  ease: [0.4, 0, 0.2, 1],
+                  staggerChildren: 0.02,
+                  when: 'beforeChildren'
+                }
+              }}
+              exit={{ 
+                x: -30 * direction, 
+                opacity: 0, 
+                filter: 'blur(4px)',
+                transition: { 
+                  duration: 0.3, 
+                  ease: [0.4, 0, 1, 1],
+                  staggerChildren: 0.01,
+                  staggerDirection: -1
+                }
+              }}
+            >
+              {filteredSkills.map((skill, index) => (
+                <motion.div 
+                  key={skill.name}
+                  className={`
+                    p-2 sm:p-3 rounded-xl backdrop-blur-sm
+                    bg-gradient-to-br ${getCategoryColor(skill.category)}
+                    border border-white/10 hover:border-white/20
+                    flex items-center justify-center
+                    h-16 sm:h-20
+                  `}
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ 
+                    opacity: 1, 
+                    y: 0,
+                    scale: 1,
+                    transition: { 
+                      type: 'spring',
+                      stiffness: 500,
+                      damping: 30,
+                      delay: index * 0.015
+                    }
+                  }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -2,
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.06)',
+                    transition: { 
+                      type: 'spring',
+                      stiffness: 500,
+                      damping: 30
+                    }
+                  }}
+                  whileTap={{ 
+                    scale: 0.98,
+                    y: 0,
+                    transition: { 
+                      type: 'spring',
+                      stiffness: 500,
+                      damping: 30
+                    }
+                  }}
+                >
+                  <motion.div 
+                    className="text-center"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ 
+                      opacity: 1, 
+                      scale: 1,
+                      transition: { 
+                        delay: index * 0.02 + 0.1,
+                        duration: 0.3
+                      }
+                    }}
+                  >
+                    <span className="text-white font-medium text-sm sm:text-base">
+                      {skill.name}
+                    </span>
+                  </motion.div>
+                </motion.div>
+              ))}
             </motion.div>
           )}
-        </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
