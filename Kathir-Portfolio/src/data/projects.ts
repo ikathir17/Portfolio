@@ -134,7 +134,7 @@ export const projects: Project[] = [
       "Shopping cart and wishlist",
       "Secure payment processing with Stripe"
     ],
-    link: "https://ecommerce-platform-ashen.vercel.app/",
+    link: "https://ecommerce-yaazhi.netlify.app/",
     credentials: {
       username: "demo@example.com",
       password: "demo123"
