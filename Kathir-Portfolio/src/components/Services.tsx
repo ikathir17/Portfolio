@@ -19,11 +19,11 @@ const services: Service[] = [
     title: 'Frontend Development',
     subtitle: 'React, JavaScript, Tailwind CSS',
     description: 'Building responsive, interactive web interfaces with modern React practices.',
-    icon: <FiCode className="w-6 h-6 text-blue-400 group-hover:text-blue-300 transition-colors" />,
+    icon: <FiCode className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400 group-hover:text-blue-300 transition-colors" />,
     techIcons: [
-      <FaReact key="react" className="w-5 h-5 text-blue-400" />,
-      <SiJavascript key="js" className="w-5 h-5 text-yellow-400" />,
-      <SiTailwindcss key="tailwind" className="w-5 h-5 text-cyan-400" />
+      <FaReact key="react" className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />,
+      <SiJavascript key="js" className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />,
+      <SiTailwindcss key="tailwind" className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
     ],
     deliverables: [
       'Landing pages with sleek animations',
@@ -36,10 +36,10 @@ const services: Service[] = [
     title: 'UI/UX Prototyping',
     subtitle: 'Figma, Design Thinking',
     description: 'Creating intuitive wireframes and prototypes that prioritize user needs.',
-    icon: <FiLayers className="w-6 h-6 text-purple-400 group-hover:text-purple-300 transition-colors" />,
+    icon: <FiLayers className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400 group-hover:text-purple-300 transition-colors" />,
     techIcons: [
-      <FaFigma key="figma" className="w-5 h-5 text-purple-400" />,
-      <FiLayers key="design" className="w-5 h-5 text-pink-400" />
+      <FaFigma key="figma" className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />,
+      <FiLayers key="design" className="w-4 h-4 sm:w-5 sm:h-5 text-pink-400" />
     ],
     deliverables: [
       'User flow diagrams',
@@ -52,11 +52,11 @@ const services: Service[] = [
     title: 'Full-Stack Solutions',
     subtitle: 'Django, MERN Stack',
     description: 'Developing functional web applications from concept to deployment.',
-    icon: <FiCpu className="w-6 h-6 text-amber-400 group-hover:text-amber-300 transition-colors" />,
+    icon: <FiCpu className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 group-hover:text-amber-300 transition-colors" />,
     techIcons: [
-      <SiDjango key="django" className="w-5 h-5 text-green-500" />,
-      <FaNodeJs key="node" className="w-5 h-5 text-green-600" />,
-      <SiMongodb key="mongo" className="w-5 h-5 text-green-400" />
+      <SiDjango key="django" className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />,
+      <FaNodeJs key="node" className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />,
+      <SiMongodb key="mongo" className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
     ],
     deliverables: [
       'Database-integrated systems',
@@ -69,10 +69,10 @@ const services: Service[] = [
     title: 'Technical Consultation',
     subtitle: 'For Students & Startups',
     description: 'Bridging theory and practice for academic projects or early-stage ideas.',
-    icon: <FiMessageSquare className="w-6 h-6 text-emerald-400 group-hover:text-emerald-300 transition-colors" />,
+    icon: <FiMessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 group-hover:text-emerald-300 transition-colors" />,
     techIcons: [
-      <FaGraduationCap key="student" className="w-5 h-5 text-emerald-400" />,
-      <FiMessageSquare key="consult" className="w-5 h-5 text-emerald-500" />
+      <FaGraduationCap key="student" className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />,
+      <FiMessageSquare key="consult" className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" />
     ],
     deliverables: [
       'Tech stack recommendations',
@@ -162,23 +162,23 @@ const staggerContainer = {
 
 const Services = () => {
   return (
-    <section id="services" className="py-20 px-4 bg-transparent relative overflow-hidden">
+    <section id="services" className="py-16 sm:py-20 px-4 sm:px-6 md:px-8 bg-transparent relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <motion.div 
-          className="text-center mb-16 px-4"
+          className="text-center mb-12 sm:mb-16 px-2 sm:px-4"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">Services I Offer</h2>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">Services I Offer</h2>
+          <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
             Practical solutions grounded in my technical training and project experience
           </p>
         </motion.div>
 
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
           variants={container}
           initial="hidden"
           whileInView="show"
@@ -187,8 +187,8 @@ const Services = () => {
           {services.map((service) => (
             <motion.div
               key={service.title}
-              className={`p-6 rounded-2xl backdrop-blur-sm border border-white/10
-                bg-gradient-to-br ${service.color.replace('/20', '/10')} hover:border-white/30 transition-all duration-200 ease-out
+              className={`p-4 sm:p-6 rounded-xl lg:rounded-2xl backdrop-blur-sm border border-white/10
+                bg-gradient-to-br ${service.color.replace('/20', '/10')} hover:border-white/30 transition-all duration-300 ease-out
                 flex flex-col items-start h-full relative overflow-hidden group backdrop-opacity-80
                 hover:shadow-lg hover:shadow-white/5 hover:scale-[1.02]`}
               variants={item}
@@ -199,17 +199,17 @@ const Services = () => {
               transition={{ type: 'spring', stiffness: 300, damping: 15 }}
             >
               <motion.div 
-                className="absolute inset-0 rounded-2xl bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="absolute inset-0 rounded-xl lg:rounded-2xl bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
                   background: 'radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, transparent 70%)',
                 }}
               />
-              <div className="flex items-start justify-between w-full mb-4 relative z-10">
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center bg-white/5 backdrop-blur-sm border border-white/10 group-hover:border-white/30 transition-all duration-200 group-hover:scale-110`}>
+              <div className="flex items-start justify-between w-full mb-3 sm:mb-4 relative z-10">
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center bg-white/5 backdrop-blur-sm border border-white/10 group-hover:border-white/30 transition-all duration-200 group-hover:scale-110`}>
                   {service.icon}
                 </div>
                 <motion.div 
-                  className="flex space-x-2"
+                  className="flex space-x-1 sm:space-x-2"
                   initial={{ opacity: 0, x: 10 }}
                   whileInView={{ 
                     opacity: 1, 
@@ -236,15 +236,15 @@ const Services = () => {
                   ))}
                 </motion.div>
               </div>
-              <h3 className="text-xl font-semibold text-white">{service.title}</h3>
-              <p className="text-blue-100/80 text-sm font-medium mt-1 mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-1">{service.title}</h3>
+              <p className="text-blue-100/80 text-xs sm:text-sm font-medium mb-2 sm:mb-3">
                 {service.subtitle}
               </p>
-              <p className="text-white/80 text-sm mb-4">
+              <p className="text-white/80 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed">
                 {service.description}
               </p>
               <motion.div 
-                className="mt-auto pt-3 border-t border-white/5 w-full"
+                className="mt-auto pt-2 sm:pt-3 border-t border-white/5 w-full"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ 
                   opacity: 1, 
@@ -256,9 +256,9 @@ const Services = () => {
                 }}
                 viewport={{ once: true, margin: "-20px" }}
               >
-                <h4 className="text-sm font-medium text-white/80 mb-2">What I deliver:</h4>
+                <h4 className="text-xs sm:text-sm font-medium text-white/80 mb-2">What I deliver:</h4>
                 <motion.ul 
-                  className="space-y-2"
+                  className="space-y-1.5 sm:space-y-2"
                   variants={staggerContainer}
                   initial="hidden"
                   whileInView="show"
@@ -281,7 +281,7 @@ const Services = () => {
                       }}
                     >
                       <motion.span 
-                        className="text-blue-300 mr-2"
+                        className="text-blue-300 mr-2 text-xs sm:text-sm"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ 
@@ -293,7 +293,7 @@ const Services = () => {
                       >
                         •
                       </motion.span>
-                      <span className="text-sm text-white/70">{item}</span>
+                      <span className="text-xs sm:text-sm text-white/70 leading-relaxed">{item}</span>
                     </motion.li>
                   ))}
                 </motion.ul>

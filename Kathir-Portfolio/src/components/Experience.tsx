@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Carousel } from './Carousel';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Briefcase, Calendar, Building, ExternalLink, Award } from 'lucide-react';
 import DetailsModal from './DetailsModal';
 
 interface ExperienceItem {
@@ -41,14 +41,15 @@ const Experience = () => {
   };
 
   return (
-    <section id="experience" className="py-24 px-4 md:px-6 relative overflow-hidden">
+    <section id="experience" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 relative overflow-hidden">
       <div className="container mx-auto relative">
-        <div className="text-center mb-12">
+        {/* Header Section */}
+        <div className="text-center mb-12 sm:mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold mb-4 text-white"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-white"
           >
             Work Experience
           </motion.h2>
@@ -57,12 +58,13 @@ const Experience = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-gray-300 max-w-3xl mx-auto"
+            className="text-sm sm:text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed"
           >
             My professional journey and hands-on experience in the tech industry
           </motion.p>
         </div>
 
+        {/* Experience Timeline */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -70,43 +72,74 @@ const Experience = () => {
           transition={{ delay: 0.2 }}
           className="relative"
         >
-          <div className="space-y-8 max-w-4xl mx-auto">
+          <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto">
             {experiences.map((exp, index) => (
               <motion.div
                 key={index}
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: 'spring', stiffness: 300 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2, duration: 0.3, ease: "easeOut" }}
+                whileHover={{ y: -4, scale: 1.01 }}
                 className="group"
               >
                 <div 
                   onClick={() => openModal(exp)}
-                  className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:border-white/20 transition-all cursor-pointer"
+                  className="bg-white/5 backdrop-blur-sm rounded-xl lg:rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl hover:shadow-blue-500/10"
                 >
-                  <div className="p-6 md:p-8">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                      <div>
-                        <h3 className="text-xl font-semibold text-white mb-1">{exp.role}</h3>
-                        <p className="text-blue-400">{exp.company}</p>
+                  <div className="p-4 sm:p-6 lg:p-8">
+                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 lg:gap-6">
+                      {/* Left Content */}
+                      <div className="flex-1 space-y-3 sm:space-y-4">
+                        {/* Header */}
+                        <div className="flex items-start gap-3">
+                          <div className="flex-shrink-0 mt-1">
+                            <Briefcase className="h-5 w-5 text-blue-400" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-1 group-hover:text-blue-300 transition-colors">
+                              {exp.role}
+                            </h3>
+                            <div className="flex items-center gap-2 text-sm sm:text-base text-blue-400">
+                              <Building className="h-4 w-4" />
+                              <span>{exp.company}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Duration Badge */}
+                        <div className="flex items-center gap-2 text-sm text-gray-400 bg-white/5 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10 w-fit">
+                          <Calendar className="h-3.5 w-3.5 text-green-400" />
+                          <span>{exp.duration}</span>
+                        </div>
+                        
+                        {/* Description */}
+                        <p className="text-sm sm:text-base text-gray-300 leading-relaxed line-clamp-3 sm:line-clamp-4">
+                          {exp.description}
+                        </p>
                       </div>
-                      <div className="text-sm text-gray-400 bg-white/5 px-3 py-1.5 rounded-full">
-                        {exp.duration}
+
+                      {/* Right Content - Image */}
+                      <div className="lg:flex-shrink-0">
+                        <div className="w-full lg:w-48 h-32 lg:h-40 rounded-lg overflow-hidden bg-white/5 border border-white/10">
+                          <img
+                            src={exp.image}
+                            alt={`${exp.company} experience`}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
                       </div>
                     </div>
                     
-                    <p className="mt-4 text-gray-300 line-clamp-3">
-                      {exp.description}
-                    </p>
-                    
-                    <div className="mt-6 flex items-center text-sm text-blue-400 group-hover:text-blue-300 transition-colors">
-                      <span>View Certificate</span>
-                      <svg 
-                        className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                    {/* Action Button */}
+                    <div className="mt-4 sm:mt-6 pt-4 border-t border-white/10">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm sm:text-base text-blue-400 group-hover:text-blue-300 transition-colors">
+                          <span>View Details</span>
+                          <ExternalLink className="h-4 w-4" />
+                        </div>
+                        <Award className="h-5 w-5 text-yellow-400 group-hover:scale-110 transition-transform" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -114,18 +147,49 @@ const Experience = () => {
             ))}
           </div>
         </motion.div>
+
+        {/* Stats Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="mt-12 sm:mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto"
+        >
+          <div className="text-center p-4 sm:p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
+            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">{experiences.length}</div>
+            <div className="text-xs sm:text-sm text-gray-300">Internships</div>
+          </div>
+          <div className="text-center p-4 sm:p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
+            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">2</div>
+            <div className="text-xs sm:text-sm text-gray-300">Companies</div>
+          </div>
+          <div className="text-center p-4 sm:p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
+            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">6+</div>
+            <div className="text-xs sm:text-sm text-gray-300">Months</div>
+          </div>
+          <div className="text-center p-4 sm:p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
+            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">100%</div>
+            <div className="text-xs sm:text-sm text-gray-300">Success Rate</div>
+          </div>
+        </motion.div>
       </div>
 
-      <DetailsModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title={selectedExp?.title || ''}
-        subtitle={selectedExp?.role}
-        issuer={selectedExp?.company}
-        image={selectedExp?.image}
-        details={selectedExp?.description || ''}
-        date={selectedExp?.duration}
-      />
+      {/* Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <DetailsModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            title={selectedExp?.title || ''}
+            subtitle={selectedExp?.role}
+            issuer={selectedExp?.company}
+            image={selectedExp?.image}
+            details={selectedExp?.description || ''}
+            date={selectedExp?.duration}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 };

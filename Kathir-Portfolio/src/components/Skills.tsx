@@ -50,21 +50,21 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-12 md:py-16 px-4 bg-transparent">
+    <section id="skills" className="py-12 sm:py-16 px-4 sm:px-6 md:px-8 bg-transparent">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-8 md:mb-12 px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4">Skills & Expertise</h2>
-          <p className="text-base md:text-lg text-white/80 max-w-2xl mx-auto mb-6 md:mb-8">
+        <div className="text-center mb-6 sm:mb-8 md:mb-12 px-2 sm:px-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3 md:mb-4">Skills & Expertise</h2>
+          <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-2xl mx-auto mb-4 sm:mb-6 md:mb-8">
             Technologies and tools I'm proficient in and use to build amazing experiences
           </p>
           
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6">
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-3 mb-4 sm:mb-6">
             {categories.map((category) => (
               <motion.button
                 key={category}
                 onClick={() => handleCategoryChange(category)}
                 className={`
-                  px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm sm:text-base font-medium 
+                  px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 rounded-lg text-xs sm:text-sm md:text-base font-medium 
                   whitespace-nowrap relative overflow-hidden
                   ${selectedCategory === category 
                     ? 'bg-white/10 text-white backdrop-blur-sm' 
@@ -122,7 +122,7 @@ const Skills = () => {
           {isLoading ? (
             <motion.div 
               key="loading"
-              className="flex justify-center items-center h-40"
+              className="flex justify-center items-center h-32 sm:h-40"
               initial={{ opacity: 0, y: 10 }}
               animate={{ 
                 opacity: 1, 
@@ -136,7 +136,7 @@ const Skills = () => {
               }}
             >
               <motion.div 
-                className="text-white/60 flex items-center gap-2"
+                className="text-white/60 flex items-center gap-2 text-sm sm:text-base"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 0.1 } }}
               >
@@ -159,7 +159,7 @@ const Skills = () => {
           ) : filteredSkills.length === 0 ? (
             <motion.div 
               key="empty"
-              className="text-center py-8"
+              className="text-center py-6 sm:py-8"
               initial={{ opacity: 0, y: 10 }}
               animate={{ 
                 opacity: 1, 
@@ -173,7 +173,7 @@ const Skills = () => {
               }}
             >
               <motion.p 
-                className="text-white/70 mb-4"
+                className="text-white/70 mb-3 sm:mb-4 text-sm sm:text-base"
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ 
                   opacity: 1, 
@@ -185,7 +185,7 @@ const Skills = () => {
               </motion.p>
               <motion.button
                 onClick={() => handleCategoryChange('All Skills')}
-                className="mt-4 px-4 py-2 text-base rounded-lg bg-white/5 hover:bg-white/10 text-white/80"
+                className="mt-3 sm:mt-4 px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg bg-white/5 hover:bg-white/10 text-white/80"
                 whileHover={{ 
                   scale: 1.05,
                   transition: { type: 'spring', stiffness: 500, damping: 30 }
@@ -207,7 +207,7 @@ const Skills = () => {
           ) : (
             <motion.div 
               key={selectedCategory}
-              className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3"
               initial={{ x: 30 * direction, opacity: 0, filter: 'blur(4px)' }}
               animate={{ 
                 x: 0, 
@@ -240,7 +240,7 @@ const Skills = () => {
                     bg-gradient-to-br ${getCategoryColor(skill.category)}
                     border border-white/10 hover:border-white/20
                     flex items-center justify-center
-                    h-16 sm:h-20
+                    h-14 sm:h-16 md:h-20
                   `}
                   initial={{ opacity: 0, y: 10, scale: 0.95 }}
                   animate={{ 
@@ -286,7 +286,7 @@ const Skills = () => {
                       }
                     }}
                   >
-                    <span className="text-white font-medium text-sm sm:text-base">
+                    <span className="text-white font-medium text-xs sm:text-sm md:text-base">
                       {skill.name}
                     </span>
                   </motion.div>

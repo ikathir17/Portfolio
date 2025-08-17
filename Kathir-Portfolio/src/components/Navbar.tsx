@@ -33,10 +33,10 @@ const Navbar = () => {
   return (
     <header 
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-black/80 backdrop-blur-md py-4' : 'bg-transparent py-6'
+        scrolled ? 'bg-black/80 backdrop-blur-md py-3 sm:py-4' : 'bg-transparent py-4 sm:py-6'
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 flex justify-between items-center">
         <a 
           href="#" 
           className="text-lg md:text-xl font-semibold tracking-tighter text-white"
@@ -45,11 +45,11 @@ const Navbar = () => {
             scrollToTop();
           }}
         >
-          <img src="/logo.png" alt="K Logo" className="h-8 w-auto" />
+          <img src="/logo.png" alt="K Logo" className="h-6 sm:h-8 w-auto" />
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex space-x-6 lg:space-x-8">
           <button
             onClick={scrollToTop}
             className="text-sm uppercase tracking-wider text-white hover:text-white/90 transition-colors"
@@ -88,41 +88,41 @@ const Navbar = () => {
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          {isOpen ? <X size={20} className="sm:w-6 sm:h-6" /> : <Menu size={20} className="sm:w-6 sm:h-6" />}
         </button>
       </div>
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md pt-24">
-          <nav className="container mx-auto px-6 flex flex-col">
+        <div className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md pt-20 sm:pt-24">
+          <nav className="container mx-auto px-4 sm:px-6 flex flex-col">
             <button
               onClick={scrollToTop}
-              className="py-6 text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
+              className="py-4 sm:py-6 text-xl sm:text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="py-6 text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
+              className="py-4 sm:py-6 text-xl sm:text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
             >
               About
             </button>
             <button
               onClick={() => scrollToSection('projects')}
-              className="py-6 text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
+              className="py-4 sm:py-6 text-xl sm:text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
             >
               Projects
             </button>
             <button
               onClick={() => scrollToSection('services')}
-              className="py-6 text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
+              className="py-4 sm:py-6 text-xl sm:text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
             >
               Services
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="py-6 text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
+              className="py-4 sm:py-6 text-xl sm:text-2xl capitalize tracking-tight text-white hover:text-white/90 transition-colors border-b border-white/10 text-left"
             >
               Contact
             </button>

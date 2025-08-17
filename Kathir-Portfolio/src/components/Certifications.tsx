@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Carousel } from './Carousel';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Calendar, Award, Building } from 'lucide-react';
 import DetailsModal from './DetailsModal';
 
 interface CertificationItem {
@@ -63,80 +63,149 @@ const Certifications = () => {
   };
 
   return (
-    <section id="certifications" className="py-24 px-4 md:px-6 relative overflow-hidden">
+    <section id="certifications" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 relative overflow-hidden">
       <div className="container mx-auto relative">
-        <div className="text-center mb-12">
+        {/* Header Section */}
+        <div className="text-center mb-12 sm:mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold mb-4 text-white"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-white"
           >
-            Certifications
+            Certifications & Achievements
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-gray-300 max-w-2xl mx-auto"
+            className="text-sm sm:text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed"
           >
-            Professional certifications and courses that validate my expertise
+            Professional certifications and courses that validate my expertise and demonstrate continuous learning
           </motion.p>
         </div>
 
+        {/* Certifications Grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="relative"
+          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-6 xl:gap-8 max-w-6xl mx-auto"
         >
-          <Carousel itemsPerView={3} gap={24} autoPlay={false}>
-            {certifications.map((cert, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.3 }}
-                className="h-full"
+          {certifications.map((cert, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.3, ease: "easeOut" }}
+              whileHover={{ y: -6, scale: 1.01 }}
+              className="group"
+            >
+              <div 
+                onClick={() => openModal(cert)}
+                className="h-full bg-white/5 backdrop-blur-sm rounded-xl lg:rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl hover:shadow-blue-500/10"
               >
-                <div 
-                  onClick={() => openModal(cert)}
-                  className="group h-full flex flex-col bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:border-white/20 transition-all cursor-pointer h-full"
-                >
-                  <div className="relative overflow-hidden pt-[56.25%]">
+                {/* Image Section */}
+                <div className="relative overflow-hidden">
+                  <div className="aspect-[16/10] relative">
                     <img
                       src={cert.image}
                       alt={`${cert.title} certificate`}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                      <span className="text-white text-sm font-medium">View Details →</span>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Overlay Content */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="bg-white/10 backdrop-blur-sm rounded-full p-2 lg:p-3 border border-white/20">
+                        <ExternalLink size={20} className="lg:w-6 lg:h-6 text-white" />
+                      </div>
+                    </div>
+
+                    {/* Score Badge */}
+                    {cert.score && (
+                      <div className="absolute top-2 lg:top-3 right-2 lg:right-3 bg-blue-500/90 backdrop-blur-sm text-white text-xs font-medium px-2 py-1 rounded-full border border-white/20">
+                        {cert.score}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Content Section */}
+                <div className="p-3 sm:p-4 lg:p-5 flex-1 flex flex-col">
+                  {/* Title */}
+                  <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-white mb-2 lg:mb-3 line-clamp-2 group-hover:text-blue-300 transition-colors">
+                    {cert.title}
+                  </h3>
+
+                  {/* Issuer and Date */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 lg:gap-3 mb-2 lg:mb-3">
+                    <div className="flex items-center gap-1.5 lg:gap-2 text-xs lg:text-sm text-gray-300">
+                      <Building size={12} className="lg:w-3.5 lg:h-3.5 text-blue-400" />
+                      <span className="truncate">{cert.issuer}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 lg:gap-2 text-xs lg:text-sm text-gray-400">
+                      <Calendar size={12} className="lg:w-3.5 lg:h-3.5 text-green-400" />
+                      <span>{cert.year}</span>
                     </div>
                   </div>
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2">{cert.title}</h3>
-                    <div className="flex justify-between items-center text-sm text-gray-400 mt-auto">
-                      <span className="truncate">{cert.issuer}</span>
-                      <span className="whitespace-nowrap ml-2">{cert.year}</span>
+
+                  {/* Action Button */}
+                  <div className="mt-auto pt-2 lg:pt-3 border-t border-white/10">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs lg:text-sm text-blue-400 font-medium group-hover:text-blue-300 transition-colors">
+                        View Details
+                      </span>
+                      <Award size={14} className="lg:w-4 lg:h-4 text-yellow-400 group-hover:scale-110 transition-transform" />
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </Carousel>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Stats Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="mt-10 sm:mt-12 lg:mt-16 grid grid-cols-3 gap-3 sm:gap-4 lg:gap-6 max-w-3xl mx-auto"
+        >
+          <div className="text-center p-3 sm:p-4 lg:p-6 bg-white/5 backdrop-blur-sm rounded-lg lg:rounded-xl border border-white/10">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1">{certifications.length}</div>
+            <div className="text-xs lg:text-sm text-gray-300">Certifications</div>
+          </div>
+          <div className="text-center p-3 sm:p-4 lg:p-6 bg-white/5 backdrop-blur-sm rounded-lg lg:rounded-xl border border-white/10">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1">4</div>
+            <div className="text-xs lg:text-sm text-gray-300">Organizations</div>
+          </div>
+
+          <div className="text-center p-3 sm:p-4 lg:p-6 bg-white/5 backdrop-blur-sm rounded-lg lg:rounded-xl border border-white/10">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1">100%</div>
+            <div className="text-xs lg:text-sm text-gray-300">Completion Rate</div>
+          </div>
         </motion.div>
       </div>
 
-      <DetailsModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title={selectedCert?.title || ''}
-        subtitle={selectedCert?.issuer}
-        image={selectedCert?.image}
-        details={selectedCert?.details || ''}
-        date={selectedCert?.year}
-      />
+      {/* Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <DetailsModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            title={selectedCert?.title || ''}
+            subtitle={selectedCert?.issuer}
+            image={selectedCert?.image}
+            details={selectedCert?.details || ''}
+            date={selectedCert?.year}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 };
