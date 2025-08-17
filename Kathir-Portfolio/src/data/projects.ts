@@ -14,6 +14,7 @@ export type Project = {
   credentials?: {
     username?: string;
     password?: string;
+    message?: string;
     admin?: {
       username: string;
       password: string;
@@ -136,8 +137,7 @@ export const projects: Project[] = [
     ],
     link: "https://ecommerce-yaazhi.netlify.app/",
     credentials: {
-      username: "demo@example.com",
-      password: "demo123"
+      message: "You can explore without login, but creating an account provides a better experience"
     }
   }
 ];
