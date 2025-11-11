@@ -18,6 +18,8 @@ interface ProjectDetailsModalProps {
     images: string[];
     tags: string[];
     link?: string;
+    backend?: string;
+    note?: string;
     credentials?: {
       username?: string;
       password?: string;
@@ -252,6 +254,27 @@ export default function ProjectDetailsModal({
                         <FiExternalLink className="mr-2 group-hover:animate-pulse" />
                         Take a Look at Live Project
                       </a>
+                    )}
+                    {/* Backend link and note (if provided) */}
+                    {project.backend && (
+                      <div>
+                        {project.note && (
+                          <div className="mb-3 text-sm text-amber-200 bg-amber-900/10 px-3 py-2 rounded-md border border-amber-900/20">
+                            {project.note}
+                          </div>
+                        )}
+
+                        <a
+                          href={project.backend}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="group inline-flex items-center justify-center w-full px-6 py-3.5 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-medium rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-amber-500/30"
+                        >
+                          <FiExternalLink className="mr-2" />
+                          Open Backend API
+                        </a>
+                      </div>
                     )}
                     {project.credentials && (
                       <div className="space-y-4">

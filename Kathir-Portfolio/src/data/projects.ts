@@ -11,6 +11,8 @@ export type Project = {
   technologies?: string[];
   features?: string[];
   link?: string;
+  backend?: string;
+  note?: string;
   credentials?: {
     username?: string;
     password?: string;
@@ -103,6 +105,8 @@ export const projects: Project[] = [
       "Crowdsourced incident reporting"
     ],
     link: "https://disaster-management-demo.vercel.app/",
+    backend: "https://project-dream-backend-zfkf.onrender.com/",
+    note: "First trigger backend api to experience then app",
     credentials: {
       username: "demo@disaster.com",
       password: "demo123"
@@ -136,6 +140,8 @@ export const projects: Project[] = [
       "Secure payment processing with Stripe"
     ],
     link: "https://ecommerce-yaazhi.netlify.app/",
+    backend: "https://e-commerce-yaazhi.onrender.com/",
+    note: "First trigger backend api to experience then app",
     credentials: {
       message: "You can explore without login, but creating an account provides a better experience"
     }
