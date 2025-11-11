@@ -21,6 +21,7 @@ interface ProjectDetailsModalProps {
     backend?: string;
     note?: string;
     credentials?: {
+        message?: string;
       username?: string;
       password?: string;
       admin?: {
@@ -64,6 +65,7 @@ export default function ProjectDetailsModal({
   project,
 }: ProjectDetailsModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showCredentials, setShowCredentials] = useState(false);
 
   if (!isOpen) return null;
 
@@ -278,56 +280,85 @@ export default function ProjectDetailsModal({
                     )}
                     {project.credentials && (
                       <div className="space-y-4">
-                        {project.credentials.admin && (
-                          <div className="bg-gradient-to-br from-purple-900/30 to-blue-900/20 rounded-xl p-5 border border-purple-800/30">
-                            <div className="flex items-center text-purple-400 mb-3">
-                              <FiLock className="mr-2" />
-                              <h3 className="text-lg font-semibold text-white">Admin Account</h3>
+                        {/* For Grievance project, hide credentials until user reveals */}
+                        {project.title === 'Grievance Handling System' && !showCredentials ? (
+                          <div className="space-y-3">
+                            <div className="text-sm text-gray-300">
+                              Credentials are hidden to protect sensitive details. Click the button below to reveal.
                             </div>
-                            <CredentialItem label="Username" value={project.credentials.admin.username} />
-                            <CredentialItem label="Password" value={project.credentials.admin.password} />
+                            <div className="flex">
+                              <button
+                                onClick={() => setShowCredentials(true)}
+                                className="inline-flex items-center justify-center w-full px-6 py-3.5 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-medium rounded-xl transition-all duration-300 hover:from-amber-500 hover:to-amber-600 shadow-lg"
+                              >
+                                Reveal Credentials
+                              </button>
+                            </div>
                           </div>
-                        )}
-
-                        {project.credentials.customer && (
-                          <div className="bg-gradient-to-br from-blue-900/30 to-cyan-900/20 rounded-xl p-5 border border-blue-800/30">
-                            <div className="flex items-center text-blue-400 mb-3">
-                              <FiLock className="mr-2" />
-                              <h3 className="text-lg font-semibold text-white">Customer Account</h3>
-                            </div>
-                            <CredentialItem label="Username" value={project.credentials.customer.username} />
-                            <CredentialItem label="Password" value={project.credentials.customer.password} />
-                          </div>
-                        )}
-
-                        {project.credentials?.employees && project.credentials.employees.length > 0 && (
-                          <div className="bg-gradient-to-br from-amber-900/30 to-yellow-900/20 rounded-xl p-5 border border-amber-800/30">
-                            <div className="flex items-center text-amber-400 mb-3">
-                              <FiLock className="mr-2" />
-                              <h3 className="text-lg font-semibold text-white">Employee Accounts</h3>
-                            </div>
-                            <div className="space-y-4">
-                              {project.credentials.employees.map((emp, index, array) => (
-                                <div key={index} className="space-y-2">
-                                  <div className="text-amber-200 text-sm font-medium">{emp.department} Department:</div>
-                                  <CredentialItem label="Username" value={emp.username} />
-                                  <CredentialItem label="Password" value={emp.password} />
-                                  {index < array.length - 1 && <div className="h-px bg-amber-800/50 my-2"></div>}
+                        ) : (
+                          <>
+                            {project.credentials.admin && (
+                              <div className="bg-gradient-to-br from-purple-900/30 to-blue-900/20 rounded-xl p-5 border border-purple-800/30">
+                                <div className="flex items-center text-purple-400 mb-3">
+                                  <FiLock className="mr-2" />
+                                  <h3 className="text-lg font-semibold text-white">Admin Account</h3>
                                 </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                                <CredentialItem label="Username" value={project.credentials.admin.username} />
+                                <CredentialItem label="Password" value={project.credentials.admin.password} />
+                              </div>
+                            )}
 
-                        {project.credentials.username && project.credentials.password && (
-                          <div className="bg-gradient-to-br from-gray-900/30 to-gray-800/20 rounded-xl p-5 border border-gray-700/30">
-                            <div className="flex items-center text-gray-400 mb-3">
-                              <FiLock className="mr-2" />
-                              <h3 className="text-lg font-semibold text-white">Demo Account</h3>
-                            </div>
-                            <CredentialItem label="Username" value={project.credentials.username} />
-                            <CredentialItem label="Password" value={project.credentials.password} />
-                          </div>
+                            {project.credentials.customer && (
+                              <div className="bg-gradient-to-br from-blue-900/30 to-cyan-900/20 rounded-xl p-5 border border-blue-800/30">
+                                <div className="flex items-center text-blue-400 mb-3">
+                                  <FiLock className="mr-2" />
+                                  <h3 className="text-lg font-semibold text-white">Customer Account</h3>
+                                </div>
+                                <CredentialItem label="Username" value={project.credentials.customer.username} />
+                                <CredentialItem label="Password" value={project.credentials.customer.password} />
+                              </div>
+                            )}
+
+                            {project.credentials?.employees && project.credentials.employees.length > 0 && (
+                              <div className="bg-gradient-to-br from-amber-900/30 to-yellow-900/20 rounded-xl p-5 border border-amber-800/30">
+                                <div className="flex items-center text-amber-400 mb-3">
+                                  <FiLock className="mr-2" />
+                                  <h3 className="text-lg font-semibold text-white">Employee Accounts</h3>
+                                </div>
+                                <div className="space-y-4">
+                                  {project.credentials.employees.map((emp, index, array) => (
+                                    <div key={index} className="space-y-2">
+                                      <div className="text-amber-200 text-sm font-medium">{emp.department} Department:</div>
+                                      <CredentialItem label="Username" value={emp.username} />
+                                      <CredentialItem label="Password" value={emp.password} />
+                                      {index < array.length - 1 && <div className="h-px bg-amber-800/50 my-2"></div>}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {project.credentials.username && project.credentials.password && (
+                              <div className="bg-gradient-to-br from-gray-900/30 to-gray-800/20 rounded-xl p-5 border border-gray-700/30">
+                                <div className="flex items-center text-gray-400 mb-3">
+                                  <FiLock className="mr-2" />
+                                  <h3 className="text-lg font-semibold text-white">Demo Account</h3>
+                                </div>
+                                <CredentialItem label="Username" value={project.credentials.username} />
+                                <CredentialItem label="Password" value={project.credentials.password} />
+                              </div>
+                            )}
+                            {/* Message-only credentials (instructions) */}
+                            {project.credentials.message && (
+                              <div className="bg-gradient-to-br from-gray-900/30 to-gray-800/20 rounded-xl p-5 border border-gray-700/30">
+                                <div className="flex items-center text-gray-300 mb-2">
+                                  <FiLayers className="mr-2 text-amber-300" />
+                                  <h3 className="text-lg font-semibold text-white">Note</h3>
+                                </div>
+                                <div className="text-sm text-gray-200">{project.credentials.message}</div>
+                              </div>
+                            )}
+                          </>
                         )}
                       </div>
                     )}

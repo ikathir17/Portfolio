@@ -78,7 +78,7 @@ export const projects: Project[] = [
   },
   {
     title: "Disaster Management System",
-    description: "Built real-time disaster monitoring with geolocation tagging. Features include crowdsourced reporting, resource allocation maps, and volunteer coordination.",
+    description: "A comprehensive real-time disaster monitoring and response platform leveraging geolocation-tagged crowdsourced reporting. The system facilitates incident submission, AI-powered validation, automated classification, and coordinated response efforts.",
     image: "/Projects/Disaster Management System.png",
     images: [
       "/Projects/Disaster Management System.png",
@@ -95,21 +95,22 @@ export const projects: Project[] = [
         label: "Monitoring"
       }
     ],
-    tags: ["MongoDB", "Express", "React", "Node.js"],
-    technologies: ["React", "Node.js", "Express", "MongoDB", "Mapbox", "Socket.io"],
+    tags: ["MongoDB", "Express", "React", "Node.js","Python"],
+    technologies: ["React", "Node.js", "Express", "MongoDB", "Leaflet.js", "Gemini API","Machine Learning","Python (NLTK, scikit-learn)"],
     features: [
-      "Real-time disaster reporting with geolocation",
-      "Interactive map for visualizing disaster zones",
-      "Resource allocation and management",
-      "Volunteer coordination system",
-      "Crowdsourced incident reporting"
+      "Real-time disaster reporting with geolocation tagging",
+      "Interactive map visualization for disaster zones and incident tracking",
+      "Resource allocation and management dashboards",
+      "Volunteer coordination and urgent-complaint handling",
+      "Crowdsourced incident reporting with verification workflows",
+      "AI/ML-powered spam filtering and disaster classification",
+      "Secure OTP-based user verification and notification delivery"
     ],
     link: "https://disaster-management-demo.vercel.app/",
     backend: "https://project-dream-backend-zfkf.onrender.com/",
     note: "First trigger backend api to experience then app",
     credentials: {
-      username: "demo@disaster.com",
-      password: "demo123"
+      message: "Use any number for login"
     }
   },
   {
@@ -131,8 +132,8 @@ export const projects: Project[] = [
         label: "Payments"
       }
     ],
-    tags: ["React", "Node.js", "MongoDB", "Stripe"],
-    technologies: ["React", "Node.js", "Express", "MongoDB", "Stripe", "Redux"],
+    tags: ["React", "Node.js","Express", "MongoDB"],
+    technologies: ["React", "Node.js", "Express", "MongoDB"],
     features: [
       "Product catalog with filtering and search",
       "User authentication and profiles",
