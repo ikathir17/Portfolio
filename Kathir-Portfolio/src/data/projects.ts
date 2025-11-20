@@ -106,7 +106,7 @@ export const projects: Project[] = [
       "AI/ML-powered spam filtering and disaster classification",
       "Secure OTP-based user verification and notification delivery"
     ],
-    link: "https://disaster-management-demo.vercel.app/",
+    link: "https://project-dream.netlify.app/",
     backend: "https://project-dream-backend-zfkf.onrender.com/",
     note: "First trigger backend api to experience then app",
     credentials: {
@@ -140,7 +140,7 @@ export const projects: Project[] = [
       "Shopping cart and wishlist",
       "Secure payment processing with Stripe"
     ],
-    link: "https://ecommerce-yaazhi.netlify.app/",
+    link: "https://ecommerce-vandire.netlify.app/",
     backend: "https://e-commerce-yaazhi.onrender.com/",
     note: "First trigger backend api to experience then app",
     credentials: {
