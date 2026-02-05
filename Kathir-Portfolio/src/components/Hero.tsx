@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, Sparkles, Code, Palette } from 'lucide-react';
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const roles = ["Full-Stack Developer", "UI/UX Designer"];
 
   useEffect(() => {
     setIsVisible(true);
+    const interval = setInterval(() => {
+      setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
   }, []);
 
   const scrollToProjects = () => {
@@ -28,28 +35,27 @@ const Hero = () => {
       </div>
 
       <div
-        className={`flex flex-col md:flex-row items-center max-w-5xl mx-auto transition-all duration-1000 transform relative z-10 ${
-          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-        }`}
+        className={`flex flex-col md:flex-row items-center max-w-5xl mx-auto transition-all duration-1000 transform relative z-10 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          }`}
       >
         {/* User Image with enhanced background blend and animation */}
         <div className="mb-6 sm:mb-8 md:mb-0 md:mr-16 flex-shrink-0 flex items-center justify-center w-full md:w-auto">
           <div className="relative group">
             {/* Enhanced glow effect */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 blur-3xl opacity-60 z-0 animate-pulse group-hover:opacity-80 transition-opacity duration-500"></div>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#232946]/50 via-[#121629]/50 to-[#0A0A0A]/50 blur-2xl opacity-80 z-0" style={{filter: 'blur(32px)'}}></div>
-            
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#232946]/50 via-[#121629]/50 to-[#0A0A0A]/50 blur-2xl opacity-80 z-0" style={{ filter: 'blur(32px)' }}></div>
+
             {/* Floating elements around image */}
             <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500/20 rounded-full blur-sm animate-bounce"></div>
             <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-purple-500/20 rounded-full blur-sm animate-bounce delay-500"></div>
             <div className="absolute top-1/2 -right-6 w-4 h-4 bg-pink-500/20 rounded-full blur-sm animate-bounce delay-1000"></div>
-            
+
             <img
               src="/user.png"
               alt="User Avatar"
               className="w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full object-cover shadow-2xl border-4 border-white/20 bg-transparent relative z-10 stable-glow group-hover:scale-105 transition-transform duration-500"
             />
-            
+
             {/* Skill badges floating around */}
             <div className="absolute -top-2 -right-2 bg-white/10 backdrop-blur-sm rounded-full p-2 border border-white/20 group-hover:scale-110 transition-transform duration-300">
               <Code className="w-4 h-4 text-blue-400" />
@@ -78,9 +84,20 @@ const Hero = () => {
                 <span className="block text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                   Kathiresan P
                 </span>
-                <span className="block text-gray-300 text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mt-2">
-                  Full-Stack Developer & UI/UX Designer
-                </span>
+                <div className="h-8 sm:h-10 md:h-12 lg:h-14 overflow-hidden relative mt-2">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={currentRoleIndex}
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      className="block text-gray-300 text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl absolute w-full"
+                    >
+                      {roles[currentRoleIndex]}
+                    </motion.span>
+                  </AnimatePresence>
+                </div>
               </h1>
 
               <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 max-w-2xl leading-relaxed">

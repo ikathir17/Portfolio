@@ -31,9 +31,40 @@ export type Project = {
       department: string;
     }>;
   };
+  status?: string;
 };
 
 export const projects: Project[] = [
+  {
+    title: "Farmer2Retailer – B2B Agri Trade Platform",
+    status: "Ongoing",
+    description: "A B2B platform connecting farmers and retailers to streamline the agricultural supply chain. Features direct produce listing, secure bulk ordering, and real-time transaction tracking to maximize efficiency.",
+    image: "/Projects/Farmer2Retailer.png",
+    images: [
+      "/Projects/Farmer2Retailer.png",
+      "/Projects/Farmer2Retailer.png",
+      "/Projects/Farmer2Retailer.png"
+    ],
+    metrics: [
+      {
+        value: "B2B",
+        label: "Direct Trade"
+      },
+      {
+        value: "Real-time",
+        label: "Tracking"
+      }
+    ],
+    tags: ["Spring Boot", "React", "MySQL", "Java"],
+    technologies: ["Java 17", "Spring Boot", "Spring Security", "MySQL", "Razorpay", "React 19", "Vite", "Chart.js", "iText PDF", "Cloudinary"],
+    features: [
+      "Role-Based Access Control (RBAC) for Farmers, Retailers, and Admin",
+      "Direct inventory management & secure bulk ordering",
+      "Real-time transaction tracking & automated PDF invoicing",
+      "Secure JWT Authentication & Razorpay integration",
+      "Comprehensive sales analytics & cloud-optimized media"
+    ]
+  },
   {
     title: "Grievance Handling System",
     description: "Developed an institutional grievance resolution platform with multi-role access (Admin, Employees, and Customers). The system streamlines ticket submission, tracking, and resolution processes while providing comprehensive dashboard analytics for administrators and department-wise ticket management for employees.",
@@ -95,8 +126,8 @@ export const projects: Project[] = [
         label: "Monitoring"
       }
     ],
-    tags: ["MongoDB", "Express", "React", "Node.js","Python"],
-    technologies: ["React", "Node.js", "Express", "MongoDB", "Leaflet.js", "Gemini API","Machine Learning","Python (NLTK, scikit-learn)"],
+    tags: ["MongoDB", "Express", "React", "Node.js", "Python"],
+    technologies: ["React", "Node.js", "Express", "MongoDB", "Leaflet.js", "Gemini API", "Machine Learning", "Python (NLTK, scikit-learn)"],
     features: [
       "Real-time disaster reporting with geolocation tagging",
       "Interactive map visualization for disaster zones and incident tracking",
@@ -132,7 +163,7 @@ export const projects: Project[] = [
         label: "Payments"
       }
     ],
-    tags: ["React", "Node.js","Express", "MongoDB"],
+    tags: ["React", "Node.js", "Express", "MongoDB"],
     technologies: ["React", "Node.js", "Express", "MongoDB"],
     features: [
       "Product catalog with filtering and search",

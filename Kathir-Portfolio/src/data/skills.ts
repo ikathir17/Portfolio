@@ -13,23 +13,26 @@ export const allSkills: { [key: string]: SkillCategory } = {
   'Web Design': 'Top Skills',
   'UI/UX': 'Top Skills',
   'Public Speaking': 'Top Skills',
-  
+
   // Development
   'Full-Stack Development': 'Development',
   'Front-End Development': 'Development',
   'HTML / CSS / JavaScript': 'Development',
   'Python': 'Development',
   'Django': 'Development',
+  'Spring Boot': 'Development',
   'MERN Stack': 'Development',
+  'React': 'Development',
+  'MySQL': 'Development',
   'C': 'Development',
   'C++': 'Development',
-  
+
   // Design
   'Figma': 'Design',
   'Prototyping': 'Design',
   'Graphic Design': 'Design',
   'Canva': 'Design',
-  
+
   // Soft Skills
   'Design Thinking': 'Soft Skills',
   'Teamwork': 'Soft Skills',

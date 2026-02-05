@@ -8,7 +8,7 @@ import { Code, ExternalLink, Calendar, Users, TrendingUp, Eye } from 'lucide-rea
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  
+
   const openProjectDetails = (project: Project) => {
     setSelectedProject(project);
   };
@@ -22,7 +22,7 @@ const Projects = () => {
       <div className="container mx-auto relative">
         {/* Header Section */}
         <div className="text-center mb-12 sm:mb-16">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -30,7 +30,7 @@ const Projects = () => {
           >
             Projects Showcase
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -53,7 +53,7 @@ const Projects = () => {
               whileHover={{ y: -4, scale: 1.01 }}
               className="group"
             >
-              <div 
+              <div
                 onClick={() => openProjectDetails(project)}
                 className="bg-white/5 backdrop-blur-sm rounded-xl lg:rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl hover:shadow-blue-500/10"
               >
@@ -70,7 +70,15 @@ const Projects = () => {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         </div>
-                        
+
+
+                        {/* Status Badge */}
+                        {project.status && (
+                          <div className="absolute top-3 left-3 bg-amber-500/90 backdrop-blur-sm text-white text-xs font-medium px-2 py-1 rounded-full border border-white/20 shadow-lg z-10">
+                            {project.status}
+                          </div>
+                        )}
+
                         {/* Live Demo Badge */}
                         {project.link && (
                           <div className="absolute top-3 right-3 bg-green-500/90 backdrop-blur-sm text-white text-xs font-medium px-2 py-1 rounded-full border border-white/20">
