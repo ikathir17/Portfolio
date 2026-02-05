@@ -39,7 +39,7 @@ const Hero = () => {
           }`}
       >
         {/* User Image with enhanced background blend and animation */}
-        <div className="mb-6 sm:mb-8 md:mb-0 md:mr-16 flex-shrink-0 flex items-center justify-center w-full md:w-auto">
+        <div className="mb-10 sm:mb-12 md:mb-0 md:mr-16 flex-shrink-0 flex items-center justify-center w-full md:w-auto">
           <div className="relative group">
             {/* Enhanced glow effect */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 blur-3xl opacity-60 z-0 animate-pulse group-hover:opacity-80 transition-opacity duration-500"></div>
