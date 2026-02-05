@@ -22,6 +22,13 @@ export const certifications: Certification[] = [
     image: '/Certifications/Infosys Python Foundation.jpg',
   },
   {
+    title: 'Infosys AI Foundation',
+    issuer: 'Infosys',
+    year: '2024',
+    details: 'Artificial Intelligence fundamentals.\nMachine Learning concepts & applications.',
+    image: '/Certifications/Infosys AI Foundation.jpeg',
+  },
+  {
     title: 'NPTEL Design Thinking - A Primer',
     issuer: 'NPTEL',
     year: 'Jan - Feb 2024',

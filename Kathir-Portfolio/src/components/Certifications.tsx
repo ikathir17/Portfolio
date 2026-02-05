@@ -29,6 +29,13 @@ const certifications: CertificationItem[] = [
     image: "/Certifications/Infosys Python Foundation.jpg"
   },
   {
+    title: "Infosys AI Foundation Certification",
+    issuer: "Infosys",
+    year: "2024",
+    details: "Artificial Intelligence fundamentals. Machine Learning concepts & applications. Gained understanding of AI lifecycle, ML algorithms, and practical implementations.",
+    image: "/Certifications/Infosys AI Foundation.jpeg"
+  },
+  {
     title: "NPTEL Certification in Design Thinking",
     issuer: "IIT Madras",
     year: "January - February 2024",
@@ -67,7 +74,7 @@ const Certifications = () => {
       <div className="container mx-auto relative">
         {/* Header Section */}
         <div className="text-center mb-12 sm:mb-16">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -75,7 +82,7 @@ const Certifications = () => {
           >
             Certifications & Achievements
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -104,7 +111,7 @@ const Certifications = () => {
               whileHover={{ y: -6, scale: 1.01 }}
               className="group"
             >
-              <div 
+              <div
                 onClick={() => openModal(cert)}
                 className="h-full bg-white/5 backdrop-blur-sm rounded-xl lg:rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-xl hover:shadow-blue-500/10"
               >
@@ -117,7 +124,7 @@ const Certifications = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
+
                     {/* Overlay Content */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="bg-white/10 backdrop-blur-sm rounded-full p-2 lg:p-3 border border-white/20">
